@@ -1,0 +1,22 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Registrace pokuty{% endblock %}
+
+{% block content %}
+  <div class="form-group">Vyplňte informace o pokutě</div>
+  <form method="POST" id='insert-form'>
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+    <label for="idPokutovaneho">Hříšník:</label>
+    <select id='idPokutovaneho' name='idPokutovaneho' class="form-control">
+    {% for n in lide %}
+        <option value={{ n[0] }}>{{ n[1]}}</option>
+    {% endfor %}
+    </select>
+    </div>
+    {{ render_input_field(form.duvod) }}
+    {{ render_input_field(form.castka) }}
+    {{ render_submit() }}
+  </form>
+{% endblock %}

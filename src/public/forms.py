@@ -3,8 +3,8 @@ import re
 from flask_wtf import Form
 from wtforms.fields import BooleanField, TextField, PasswordField, DateTimeField, IntegerField,SelectField
 from wtforms.validators import EqualTo, Email, InputRequired, Length
-
-from ..data.models import User, LogUser
+from ..data.database import db
+from ..data.models import User, LogUser, Lide, Pokuty
 from ..fields import Predicate
 
 def email_is_available(email):
@@ -23,6 +23,14 @@ def safe_characters(s):
         return True
     return re.match(r'^[\w]+$', s) is not None
 
+class getLide():
+    @staticmethod
+    def getLide():
+        query = db.session.query(Lide).all()
+        output = []
+        for clovek in query:
+            output.append((str(clovek.id), clovek.jmeno+" "+clovek.prijmeni+" ["+str(clovek.id)+"]"))
+        return output
 
 class LogUserForm(Form):
 
@@ -44,3 +52,11 @@ class secti(Form):
 class masoform(Form):
     typ=SelectField('Typ', choices=[(1, "Hovezi"), (2, "Veprove")], default=2)
 
+class pokuta(Form):
+    idPokutovaneho = SelectField('ID',choices=getLide.getLide())
+    duvod = TextField('Duvod',validators=[InputRequired(message="Vyzadovano")])
+    castka = IntegerField('Castka')
+
+class lide(Form):
+    jmeno = TextField('Jmeno',validators=[InputRequired(message="Vyzadovano")])
+    prijmeni = TextField('Prijmeni',validators=[InputRequired(message="Vyzadovano")])

@@ -1,0 +1,14 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Registrace do databáze pokut{% endblock %}
+
+{% block content %}
+  <div class="form-group">Vyplnte jméno a příjmení pro registraci do databáze pokut.</div>
+  <form method="POST" id='insert-form'>
+    {{ form.hidden_tag() }}
+    {{ render_input_field(form.jmeno) }}
+    {{ render_input_field(form.prijmeni) }}
+    {{ render_submit() }}
+  </form>
+{% endblock %}

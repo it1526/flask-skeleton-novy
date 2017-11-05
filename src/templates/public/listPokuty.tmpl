@@ -1,0 +1,17 @@
+{% from "macros/fields.tmpl" import render_input_field, render_submit %}
+{% extends "shared/layout.tmpl" %}
+
+{% block title %}Seznam pokut{% endblock %}
+
+{% block content %}
+  <table class="table">
+    {% for n in data %}
+        <tr>
+            <td>{{ lide[n.idPokutovaneho-1].jmeno }} {{ lide[n.idPokutovaneho-1].prijmeni }}</td>
+            <td>{{ n.duvod }}</td>
+            <td>{{ n.castka }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
